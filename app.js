@@ -7,8 +7,10 @@ const {
   animals,
 } = require("unique-names-generator");
 
-const SRV_STRING =
-  "mongodb+srv://ahmarcode-one:<password>@ahmar-my-first-cluster.jegayvb.mongodb.net/?retryWrites=true&w=majority";
+const env = require("dotenv").config().parsed;
+const database_password = env["MONGODB_PASSWORD"];
+
+const SRV_STRING = `mongodb+srv://ahmarcode-one:${database_password}@ahmar-my-first-cluster.jegayvb.mongodb.net/?retryWrites=true&w=majority`;
 
 const URL_LIST = [
   "google.com",
