@@ -8,7 +8,7 @@ const {
 } = require("unique-names-generator");
 
 const SRV_STRING =
-  "mongodb+srv://ahmarcode-one:fWp9MWmoS4HbEk@ahmar-my-first-cluster.jegayvb.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://ahmarcode-one:<password>@ahmar-my-first-cluster.jegayvb.mongodb.net/?retryWrites=true&w=majority";
 
 const URL_LIST = [
   "google.com",
