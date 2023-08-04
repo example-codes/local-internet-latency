@@ -8,6 +8,10 @@ const {
 } = require("unique-names-generator");
 
 const env = require("dotenv").config().parsed;
+if (!env) {
+  console.log("Environment variable not setup, exiting");
+  process.exit();
+}
 const database_password = env["MONGODB_PASSWORD"];
 
 const SRV_STRING = `mongodb+srv://ahmarcode-one:${database_password}@ahmar-my-first-cluster.jegayvb.mongodb.net/?retryWrites=true&w=majority`;
