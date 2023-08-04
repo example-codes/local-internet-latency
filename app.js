@@ -13,6 +13,7 @@ if (!env) {
   process.exit();
 }
 const database_password = env["MONGODB_PASSWORD"];
+const monitoring = env["MONITORING"] === "true";
 
 const SRV_STRING = `mongodb+srv://ahmarcode-one:${database_password}@ahmar-my-first-cluster.jegayvb.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -79,7 +80,7 @@ async function visitWebsite(url = "google.com") {
   console.log("-----\n", { timeTaken });
   return [timeTaken, response];
 }
-async function run() {
+async function run(isInMonitoringMode = false) {
   try {
     // Connect the client to the server (optional starting in v4.7)
     await client.connect();
@@ -163,10 +164,28 @@ async function run() {
       }
     }
 
-    await monitorInternetLatencyEvery10Seconds();
+    // app code
+    if (isInMonitoringMode) await monitorInternetLatencyEvery10Seconds();
+    else {
+      async function findAllItem(someArg = { myId: { $regex: /.*/i } }) {
+        const someMovies = await client
+          .db("test")
+          .collection("movies")
+          .find(someArg)
+          .toArray();
+
+        return someMovies;
+      }
+
+      const data = await findAllItem();
+      return data;
+    }
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
-run().catch(console.dir);
+
+run(monitoring).catch(console.dir);
+
+module.exports = async () => run(false);
